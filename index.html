@@ -5,53 +5,96 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>250 Robux Giveaway</title>
+<title>Roblox Giveaway</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 body {
+  margin:0;
   font-family: Arial;
-  background: linear-gradient(135deg,#0f172a,#1e293b);
-  color: white;
-  text-align: center;
+  background:#111827;
+  color:white;
 }
+
+/* Header */
+
+.header {
+  background:#e11d48;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* Logo */
+
+.logo {
+  font-size:40px;
+  margin:20px;
+}
+
+/* Form box */
 
 .container {
-  max-width: 400px;
-  margin: 40px auto;
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  max-width:400px;
+  margin:auto;
+  background:#1f2937;
+  padding:20px;
+  border-radius:15px;
 }
 
-h1 {
-  color: #22c55e;
-}
+/* Inputs */
 
 input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: none;
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
 }
+
+/* Button */
 
 button {
-  width: 100%;
-  padding: 14px;
-  background: #22c55e;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  color: white;
+  width:100%;
+  padding:14px;
+  background:#e11d48;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-size:16px;
 }
 
-.note {
-  font-size: 12px;
-  opacity: 0.7;
+/* Loading animation */
+
+.loader {
+  display:none;
+  margin-top:15px;
+}
+
+.spin {
+  border:4px solid #333;
+  border-top:4px solid #e11d48;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  margin:auto;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform:rotate(0deg); }
+  100% { transform:rotate(360deg); }
+}
+
+/* Mobile friendly */
+
+@media(max-width:500px){
+  .container{
+    margin:10px;
+  }
 }
 
 </style>
@@ -60,17 +103,23 @@ button {
 
 <body>
 
+<div class="header">
+🎮 Roblox Giveaway
+</div>
+
+<div class="logo">
+🟥 RBLX FAN EVENT
+</div>
+
 <div class="container">
 
-<h1>🎁 250 Robux Giveaway</h1>
-
-<p>Enter your details to receive 250 Robux!</p>
+<h3>Enter Giveaway</h3>
 
 <form id="form">
 
 <input
 id="useremail"
-placeholder="Roblox Username or Email"
+placeholder="Username or Email"
 required>
 
 <input
@@ -79,14 +128,18 @@ placeholder="Nickname"
 required>
 
 <button type="submit">
-Claim 250 Robux
+Join Giveaway
 </button>
 
 </form>
 
-<p class="note">
-Username only — never share passwords 🔒
-</p>
+<div class="loader" id="loader">
+
+<div class="spin"></div>
+
+<p>⏳ Processing Gift...</p>
+
+</div>
 
 <p id="msg"></p>
 
@@ -94,13 +147,13 @@ Username only — never share passwords 🔒
 
 <script>
 
-// 🔧 PUT YOUR SUPABASE DETAILS HERE
+// 🔧 PUT SUPABASE KEYS HERE
 
 const SUPABASE_URL =
-"PASTE_YOUR_URL";
+"PASTE_URL";
 
 const SUPABASE_KEY =
-"PASTE_YOUR_ANON_KEY";
+"PASTE_KEY";
 
 const supabase =
 supabase.createClient(
@@ -111,9 +164,12 @@ SUPABASE_KEY
 document
 .getElementById("form")
 .addEventListener("submit",
-async (e) => {
+async (e)=>{
 
 e.preventDefault();
+
+document.getElementById("loader")
+.style.display="block";
 
 const useremail =
 document.getElementById("useremail").value;
@@ -123,28 +179,35 @@ document.getElementById("nickname").value;
 
 const { error } =
 await supabase
-.from("robux_entries")
+.from("entries")
 .insert([
 {
-useremail: useremail,
-nickname: nickname
+useremail:useremail,
+nickname:nickname
 }
 ]);
 
-if (error) {
+setTimeout(()=>{
+
+document.getElementById("loader")
+.style.display="none";
+
+if(error){
 
 document.getElementById("msg")
-.innerText = "Error submitting.";
+.innerText="❌ Error";
 
-} else {
+}else{
 
 document.getElementById("msg")
-.innerText =
-"✅ Successfully Submitted!";
+.innerText=
+"✅ Added to Giveaway!";
 
 document.getElementById("form").reset();
 
 }
+
+},2000);
 
 });
 
