@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport"
+content="width=device-width">
+
+<title>Admin Panel</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111827;
+color:white;
+padding:20px;
+}
+
+button{
+background:#e11d48;
+border:none;
+padding:8px 12px;
+color:white;
+border-radius:6px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+td,th{
+border:1px solid #444;
+padding:10px;
+}
+
+th{
+background:#e11d48;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>📊 Admin Panel</h2>
+
+<button onclick="load()">
+🔄 Refresh
+</button>
+
+<table id="table">
+
+<tr>
+<th>ID</th>
+<th>User</th>
+<th>Nickname</th>
+<th>Delete</th>
+</tr>
+
+</table>
+
+<script>
+
+const SUPABASE_URL =
+"PASTE_URL";
+
+const SUPABASE_KEY =
+"PASTE_KEY";
+
+const supabase =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+async function load(){
+
+const table =
+document.getElementById("table");
+
+table.innerHTML = `
+<tr>
+<th>ID</th>
+<th>User</th>
+<th>Nickname</th>
+<th>Delete</th>
+</tr>
+`;
+
+const { data } =
+await supabase
+.from("entries")
+.select("*");
+
+data.forEach(row=>{
+
+const tr =
+document.createElement("tr");
+
+tr.innerHTML=`
+<td>${row.id}</td>
+<td>${row.useremail}</td>
+<td>${row.nickname}</td>
+<td>
+<button onclick="del(${row.id})">
+🗑️
+</button>
+</td>
+`;
+
+table.appendChild(tr);
+
+});
+
+}
+
+async function del(id){
+
+await supabase
+.from("entries")
+.delete()
+.eq("id",id);
+
+load();
+
+}
+
+load();
+
+</script>
+
+</body>
+</html>
